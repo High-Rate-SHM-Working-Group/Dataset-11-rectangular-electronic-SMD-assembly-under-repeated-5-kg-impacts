@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 folder_path = r"C:\Users\trott\Documents\Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts\Data\Board 4.3"
 save_path = r"C:\Users\trott\Documents\Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts\Data\Board 4.3\Figures"
 MAX_VALID_RESISTANCE = 100000  # Define your threshold here
-MIN_VALID_RESISTANCE = 1      # Avoid log(0) or negative
+MIN_VALID_RESISTANCE = 0     # Avoid log(0) or negative
 
 lvm_files = sorted([f for f in os.listdir(folder_path) if f.endswith(".lvm")])
 
@@ -26,7 +26,7 @@ for i, filename in enumerate(lvm_files):
 
         try:
             resistance = float(columns[-1])
-            if resistance < MAX_VALID_RESISTANCE:
+            if MIN_VALID_RESISTANCE <= resistance <= MAX_VALID_RESISTANCE:
                 resistances.append(resistance)
                 impact_numbers.append(i + 1)
             else:
@@ -35,10 +35,12 @@ for i, filename in enumerate(lvm_files):
             print(f"Skipping {filename}: invalid format")
 
 # Plotting
-plt.figure(figsize=(10, 6))
-plt.plot(impact_numbers, resistances, marker='o', linestyle='-')
-plt.xlabel('Impact Number')
-plt.ylabel('Resistance (Ohms)')
+plt.rcParams['font.family'] = 'Times New Roman'
+plt.rcParams['font.size'] = 11
+plt.figure(figsize=(6, 4))
+plt.plot(impact_numbers, resistances, marker='.', linestyle='')
+plt.xlabel('impact number')
+plt.ylabel('resistance (Ohms)')
 plt.title('Filtered Resistance vs. Impact Number')
 plt.grid(True)
 plt.tight_layout()
