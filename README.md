@@ -3,6 +3,8 @@ A dataset for a rectangular PCB under consistent impact-to-failure testing.
 
 The experimental setup consists of a fixed-fixed configured PCB (effective length 3.0 inches) equipped with a 1 Watt, 100 mΩ resistor (https://www.digikey.com/en/products/detail/te-connectivity-passive-product/SMQW1R10JT/21316471).
 
+PCB files can be found @ https://github.com/High-Rate-SHM-Working-Group/Dataset-9-repeated-impact-testing-of-rectangular-electronic-assembly/tree/main/KiCad
+
 ## Licensing and Citation
 
 This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License [cc-by-sa 4.0].
