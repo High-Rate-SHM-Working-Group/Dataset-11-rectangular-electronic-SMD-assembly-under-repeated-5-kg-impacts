@@ -11,7 +11,7 @@ This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 Intern
 
 Cite this data as:
 
-Roberts, Trotter, Joud N. Satme, and Austin R.J. Downey. Dataset-10 Circular PCB with Repeated Shock Loading. High-Rate-SHM-Working-Group.
+Roberts, Trotter, Joud N. Satme, and Austin R.J. Downey. Dataset 11 rectangular electronic assembly under repeated 5 kg impacts. High Rate SHM Working Group.
 
 Bibtex
 @Misc{RobertsDataset10Circular,
