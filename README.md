@@ -1,5 +1,5 @@
 # Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts
-A dataset for a rectangular PCB under consistant impact-to-failure testing. 
+A dataset for a rectangular PCB under consistent impact-to-failure testing. 
 
 
 ## Licensing and Citation
