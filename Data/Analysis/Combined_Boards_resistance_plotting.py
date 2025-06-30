@@ -8,7 +8,7 @@ Created on Fri Jun 27 10:42:08 2025
 import os
 import matplotlib.pyplot as plt
 
-save_path_combined = r"C:\Users\hugol\Documents\Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts\Data\Combined Boards\Figures"
+save_path_combined = r"C:\Users\hugol\Documents\Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts\Data\Analysis\Figures"
 
 MAX_VALID_RESISTANCE = 5  # Define your threshold here
 MIN_VALID_RESISTANCE = 1      # Avoid log(0) or negative
