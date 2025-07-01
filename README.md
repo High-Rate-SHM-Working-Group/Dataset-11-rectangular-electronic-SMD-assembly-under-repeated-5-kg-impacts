@@ -14,9 +14,9 @@ Cite this data as:
 Roberts, Trotter, Joud N. Satme, and Austin R.J. Downey. Dataset 11 rectangular electronic assembly under repeated 5 kg impacts. High Rate SHM Working Group.
 
 Bibtex
-@Misc{RobertsDataset10Circular,
-author = {Trotter Roberts and Joud N. Satme and Austin R.J. Downey},
-title = {Dataset 11 rectangular electronic assembly under repeated 5 kg impacts},
-groups = {High Rate SHM Working Group},
-url = {https://github.com/High-Rate-SHM-Working-Group/Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts},
+@Misc{RobertsDataset10Circular,   
+author = {Trotter Roberts and Joud N. Satme and Austin R.J. Downey},   
+title = {Dataset 11 rectangular electronic assembly under repeated 5 kg impacts},   
+groups = {High Rate SHM Working Group},   
+url = {https://github.com/High-Rate-SHM-Working-Group/Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts},   
 }
