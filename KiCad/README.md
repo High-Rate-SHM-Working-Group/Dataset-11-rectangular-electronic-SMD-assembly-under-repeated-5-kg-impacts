@@ -1,3 +1,3 @@
 # KiCad
 
-KiCaD files for the boards used in this work.
+KiCad files for the board used in this work.
