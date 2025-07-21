@@ -39,10 +39,10 @@ for i in data_list:
                         if resistance_baseline == -1: # Runs for first value to set the base resistance and zero the graph
                             resistance_baseline = resistance
                             resistances.append((resistance-resistance_baseline))
-                            impacts.append(j + 1)
+                            impacts.append(j)
                         elif resistance < MAX_VALID_RESISTANCE: # Adds resistance if valid
                             resistances.append((resistance-resistance_baseline))
-                            impacts.append(j + 1)
+                            impacts.append(j)
                         else:
                             print(f"Skipping {filename}: resistance {resistance} exceeds threshold")
                     except (IndexError, ValueError):
