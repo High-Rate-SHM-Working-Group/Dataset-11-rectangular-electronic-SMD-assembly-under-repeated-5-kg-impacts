@@ -9,6 +9,8 @@ import os
 import math
 import copy
 import numpy as np
+from scipy.stats import skew
+from scipy.stats import kurtosis
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
 
@@ -18,7 +20,7 @@ save_path = current_directory.replace("\Board 4.6", "\Board 4.6\\figures")
 
 impacts = []
 feature_names = ["Maximum", "Absolute Mean", "RMS", "Skewness", "Kurtosis", "Crest Factor", "Shape Factor", "Impulse Factor"]
-features = [[] for i in range(3)]
+features = [[] for i in range(5)]
 
 lvm_files = sorted([f for f in os.listdir(file_path) if f.endswith(".lvm")])
             
@@ -30,16 +32,27 @@ for j, filename in enumerate(lvm_files):
         current_max = -1
         absolute_mean = 0
         rms_value = 0
+        current_max_index = -1
         for k in range(len(data)):
             data_zeroed[k]-=data[0]
             if abs(data_zeroed[k]) > current_max:
                 current_max = abs(data_zeroed[k])
+                current_max_index = k
+        try:
+            data_zeroed_smaller = data_zeroed[(current_max_index-1000):(current_max_index+11000)]
+        except:
+            data_zeroed_smaller = data_zeroed[(current_max_index-1000):]
+        
+        for k in range(len(data_zeroed_smaller)):
             absolute_mean += (abs(data_zeroed[k])/len(data_zeroed))
             rms_value += pow(data_zeroed[k], 2)
         
         features[0].append(current_max)
         features[1].append(absolute_mean)
         features[2].append(rms_value)
+        features[3].append(skew(data_zeroed_smaller))
+        features[4].append(kurtosis(data_zeroed_smaller))
+        
         impacts.append(j)
 
 #print(features[0])
@@ -66,6 +79,16 @@ while(not outliers_fixed):
     else:
         outliers_fixed = True
 
+nan_fixed = False
+while(not nan_fixed):
+    for i in range(len(features[0])):
+        for j in range(len(features)):
+            if features[j][i] == None:
+                if len(features[j]) == len(impacts):
+                    impacts.pop(i)
+                features[j].pop(i)
+    else:
+        nan_fixed = True
 #print(features[0][0])
 
 features_zeroed = copy.deepcopy(features)
