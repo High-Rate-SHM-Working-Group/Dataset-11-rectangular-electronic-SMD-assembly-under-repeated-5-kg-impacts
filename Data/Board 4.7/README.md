@@ -6,4 +6,4 @@ Figure 1: Resistance vs. impact number
 
 
 ![Figure 2](Figures/4_7_feature_plot.png)
-Figure 1: Feature plot
+Figure 2: Feature plot
