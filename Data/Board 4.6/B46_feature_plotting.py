@@ -20,7 +20,7 @@ save_path = current_directory.replace("\Board 4.6", "\Board 4.6\\figures")
 
 impacts = []
 feature_names = ["Maximum", "Absolute Mean", "RMS", "Skewness", "Kurtosis", "Crest Factor", "Shape Factor", "Impulse Factor"]
-features = [[] for i in range(5)]
+features = [[] for i in range(len(feature_names))]
 
 lvm_files = sorted([f for f in os.listdir(file_path) if f.endswith(".lvm")])
             
@@ -38,20 +38,28 @@ for j, filename in enumerate(lvm_files):
             if abs(data_zeroed[k]) > current_max:
                 current_max = abs(data_zeroed[k])
                 current_max_index = k
-        try:
-            data_zeroed_smaller = data_zeroed[(current_max_index-1000):(current_max_index+11000)]
-        except:
-            data_zeroed_smaller = data_zeroed[(current_max_index-1000):]
+        if (current_max_index < 1000):
+            data_zeroed_smaller = data_zeroed[:(current_max_index+11000)]
+        else:     
+            try:
+                data_zeroed_smaller = data_zeroed[(current_max_index-1000):(current_max_index+11000)]
+            except:
+                data_zeroed_smaller = data_zeroed[(current_max_index-1000):]
         
         for k in range(len(data_zeroed_smaller)):
-            absolute_mean += (abs(data_zeroed[k])/len(data_zeroed))
-            rms_value += pow(data_zeroed[k], 2)
+            absolute_mean += (abs(data_zeroed_smaller[k])/len(data_zeroed_smaller))
+            rms_value += pow(data_zeroed_smaller[k], 2)
+            
+        rms_value = (math.sqrt(rms_value))/len(data_zeroed_smaller)
         
         features[0].append(current_max)
         features[1].append(absolute_mean)
         features[2].append(rms_value)
         features[3].append(skew(data_zeroed_smaller))
         features[4].append(kurtosis(data_zeroed_smaller))
+        features[5].append((current_max/rms_value))
+        features[6].append((rms_value/absolute_mean))
+        features[7].append((current_max/absolute_mean))
         
         impacts.append(j)
 
@@ -79,17 +87,27 @@ while(not outliers_fixed):
     else:
         outliers_fixed = True
 
+#print(np.isnan(features))
+
 nan_fixed = False
 while(not nan_fixed):
     for i in range(len(features[0])):
         for j in range(len(features)):
-            if features[j][i] == None:
-                if len(features[j]) == len(impacts):
-                    impacts.pop(i)
-                features[j].pop(i)
+            if np.isnan(features[j][i]):
+                for k in range(len(features)):
+                    if k == 0:
+                        impacts.pop(i)
+                    features[k].pop(i)
+                    nan_fixed = True
+                break
+        if nan_fixed:
+            nan_fixed = False
+            break
     else:
         nan_fixed = True
 #print(features[0][0])
+#print('\n')
+#print(np.isnan(features))
 
 features_zeroed = copy.deepcopy(features)
 
@@ -105,9 +123,14 @@ for i in range(len(features)):
 #print(features[1])
 
 plt.figure(figsize=(10, 6))
-plt.plot(impacts, features_normalized[0][0],  marker='o', linestyle='', label=feature_names[0])
-plt.plot(impacts, features_normalized[1][0],  marker='o', linestyle='', label=feature_names[1])
-plt.plot(impacts, features_normalized[2][0],  marker='o', linestyle='', label=feature_names[2])
+for i in range(len(feature_names)):
+    plt.plot(impacts, features_normalized[i][0],  marker='o', linestyle='', label=feature_names[i])
+#plt.plot(impacts, features_normalized[0][0],  marker='o', linestyle='', label=feature_names[0])
+#plt.plot(impacts, features_normalized[1][0],  marker='o', linestyle='', label=feature_names[1])
+#plt.plot(impacts, features_normalized[2][0],  marker='o', linestyle='', label=feature_names[2])
+#plt.plot(impacts, features_normalized[3][0],  marker='o', linestyle='', label=feature_names[3])
+#plt.plot(impacts, features_normalized[4][0],  marker='o', linestyle='', label=feature_names[4])
+#plt.plot(impacts, features_normalized[4][0],  marker='o', linestyle='', label=feature_names[4])
 plt.legend()
 plt.xlabel('Impact Number')
 plt.ylabel('Feature Values')
