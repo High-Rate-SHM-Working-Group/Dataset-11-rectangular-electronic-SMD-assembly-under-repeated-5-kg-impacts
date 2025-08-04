@@ -3,3 +3,6 @@ Data from set iteration 0 board 0. Failure occured after 0 impacts.
 
 ![Figure 1](Figures/0_0_metric_plot.png)
 Figure 1: Resistance vs. impact number
+
+![Figure 2](Figures/0_0_feature_plot.png)
+Figure 2: Feature plot
