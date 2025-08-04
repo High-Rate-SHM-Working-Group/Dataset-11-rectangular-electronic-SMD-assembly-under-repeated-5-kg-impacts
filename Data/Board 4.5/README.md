@@ -3,3 +3,6 @@ Data from set iteration 4 board 5. Failure occured after 82 impacts.
 
 ![Figure 1](Figures/4_5_metric_plot.png)
 Figure 1: Resistance vs. impact number
+
+![Figure 2](Figures/4_5_feature_plot.png)
+Figure 2: Feature plot
