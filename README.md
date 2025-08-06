@@ -1,4 +1,4 @@
-# Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts
+# Dataset 11 Rectangular Electronic SMD Assembly Under Repeated 5 kg Impacts
 The experimental setup consists of a fixed-fixed configured PCB (effective length 3.0 inches) equipped with a 1 Watt, 100 mΩ resistor (https://www.digikey.com/en/products/detail/te-connectivity-passive-product/SMQW1R10JT/21316471).
 
 ## Licensing and Citation
