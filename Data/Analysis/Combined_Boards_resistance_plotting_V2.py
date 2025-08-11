@@ -5,9 +5,7 @@ Created on Mon Jun 30 11:57:50 2025
 """
 
 import os
-import copy
 import matplotlib.pyplot as plt
-from sklearn import preprocessing
 
 current_directory = os.getcwd()
 file_path = current_directory.replace("\Analysis", "")
