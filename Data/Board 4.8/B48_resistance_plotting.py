@@ -9,8 +9,9 @@ import os
 import matplotlib.pyplot as plt
 
 # Folder containing your .lvm files
-folder_path = r"C:\Users\trott\Documents\Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts\Data\Board 4.8"
-save_path = r"C:\Users\trott\Documents\Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts\Data\Board 4.8\Figures"
+current_directory = os.getcwd()
+folder_path = current_directory
+save_path = current_directory.replace("\Board 4.8", "\Board 4.8\\figures")
 MAX_VALID_RESISTANCE = 100000  # Define your threshold here
 MIN_VALID_RESISTANCE = 0     # Avoid log(0) or negative
 
