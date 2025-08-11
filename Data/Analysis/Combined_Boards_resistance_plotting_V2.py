@@ -5,7 +5,9 @@ Created on Mon Jun 30 11:57:50 2025
 """
 
 import os
+import copy
 import matplotlib.pyplot as plt
+from sklearn import preprocessing
 
 current_directory = os.getcwd()
 file_path = current_directory.replace("\Analysis", "")
@@ -54,7 +56,7 @@ for i in data_list:
 plt.figure(figsize=(10, 6))
 for i in range(len(board_names)):
     plt.plot(impact_numbers_list[i], resistance_numbers_list[i],  marker='o', linestyle='', label=board_names[i])
-plt.ylim([-0.0001,0.002])
+plt.ylim([-0.0005,0.002])
 plt.legend()
 plt.xlabel('Impact Number')
 plt.ylabel('Resistance Change (Ohms)')
