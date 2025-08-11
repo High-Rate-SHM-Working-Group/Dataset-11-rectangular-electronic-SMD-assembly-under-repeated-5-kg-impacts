@@ -124,7 +124,7 @@ for i in range(len(features)):
 
 plt.figure(figsize=(10, 6))
 for i in range(len(feature_names)):
-    plt.plot(impacts, features_normalized[i][0],  marker='o', linestyle='', label=feature_names[i])
+    plt.plot(impacts, features_normalized[i][0],  marker='o', linestyle='-', label=feature_names[i])
 #plt.plot(impacts, features_normalized[0][0],  marker='o', linestyle='', label=feature_names[0])
 #plt.plot(impacts, features_normalized[1][0],  marker='o', linestyle='', label=feature_names[1])
 #plt.plot(impacts, features_normalized[2][0],  marker='o', linestyle='', label=feature_names[2])
