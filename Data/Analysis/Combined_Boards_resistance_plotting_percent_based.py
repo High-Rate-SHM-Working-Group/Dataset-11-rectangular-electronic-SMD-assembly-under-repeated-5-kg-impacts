@@ -27,9 +27,10 @@ for i in data_list:
     if "Board" in i:
         if not i == "Board 0.0":
             new_file_address = file_path+"\\"+i
+            new_save_address = file_path+"\\"+i+"\\figures"
             board_names.append(i)
             board_names_trendline.append(i+' Trendline')
-            board_save_paths.append(new_file_address)
+            board_save_paths.append(new_save_address)
             
             lvm_files = sorted([f for f in os.listdir(new_file_address) if f.endswith(".lvm")])
             
