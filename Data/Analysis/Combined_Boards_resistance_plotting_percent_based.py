@@ -162,6 +162,19 @@ plt.tight_layout()
 plt.savefig(f"{save_path}\\all_boards_metric_plot_percent_based_with_trendlines.png", dpi=300)
 plt.show()
 
+plt.figure(figsize=(10, 6))
+for i in range(len(board_names)):
+    plt.plot(fit_line_x_values[i], fit_line_y_values[i], label=board_names_trendline[i])
+plt.ylim([-5,120])
+plt.legend()
+plt.xlabel('Impact Percent')
+plt.ylabel('Resistance Percent')
+plt.title('Resistance Percent vs. Impact Percent')
+plt.grid(True)
+plt.tight_layout()
+plt.savefig(f"{save_path}\\all_boards_trendline_plot.png", dpi=300)
+plt.show()
+
 for i in range(len(board_names)):
     plt.figure(figsize=(10,6))
     plt.plot(fit_line_x_values[i], fit_line_y_values[i], label=board_names_trendline[i])
