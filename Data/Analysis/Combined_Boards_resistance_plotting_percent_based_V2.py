@@ -98,44 +98,31 @@ b_values = []
 def y_value(a, b, x):
     return (a * (1 - 1*np.exp((-1*b*x))))
 
-def partial_a(a, b, x, y):
-    return (2*(y-1*a*(1-1*np.exp(-1*b*x))))*(1-np.exp(-1*b*x))
+def a_value(b, x, y):
+    return ((2*y)/(1-np.exp(-1*b*x)))
     
-def partial_b(a, b, x, y):
-    return (2*(y-1*a*(1-1*np.exp(-1*b*x))))*(-1*a*x*np.exp(-1*b*x))
+def partial_b_solved_for_a(b, x, y):
+    return ((4*y*x*np.exp(-1*b*x))/(1-np.exp(-1*b*x)))
 
-def sum_of_partial_a(impact_percents, resistance_percents, a, b):
+def solve_for_sum_of_partial_b(impact_percents, resistance_percents, b):
     sum_of_partial = 0
     for i in range(len(impact_percents)):
-        sum_of_partial += partial_a(a, b, impact_percents[i], resistance_percents[i])
+        sum_of_partial += partial_b_solved_for_a(b, impact_percents[i], resistance_percents[i])
     return sum_of_partial
 
-def sum_of_partial_b(impact_percents, resistance_percents, a, b):
-    sum_of_partial = 0
-    for i in range(len(impact_percents)):
-        sum_of_partial += partial_b(a, b, impact_percents[i], resistance_percents[i])
-    return sum_of_partial
-
-def change_a(a, partial_sum, a_rate):
-    return (a - (partial_sum * a_rate))
-
-def change_b(b, partial_sum ,b_rate):
-    return (b - (partial_sum * b_rate))
+def sum_of_square_residuals()
 
 for i in range(len(impact_numbers_percents)):
-    a = 100
-    b = 0.08
-    a_rate_value = 0.0001
-    b_rate_value = 0.0000001
-    partial_a_value = 0
-    partial_b_value = 0
-    for j in range(50000):
-        partial_a_value = sum_of_partial_a(impact_numbers_percents[i], resistance_numbers_percents[i], a, b)
-        partial_b_value = sum_of_partial_b(impact_numbers_percents[i], resistance_numbers_percents[i], a, b)
-        if(a_rate_value*partial_a_value<=0.000000000000000000000001 and b_rate_value*partial_b_value<=0.0000000000000000000000000000001):
-            break
-        a = change_a(a, partial_a_value, a_rate_value)
-        b = change_b(b, partial_b_value, b_rate_value)
+    a = -1
+    b = -1
+    possible_b_values = np.linspace(0,1,10000)
+    b_zeros = []
+    a_zeros = []
+    for j in range(len(possible_b_values)):
+        if(solve_for_sum_of_partial_b(impact_numbers_percents[i], resistance_numbers_percents[i], possible_b_values[j]) == 0):
+            b_zeros.append[j]
+    for j in range(len(b_zeros)):
+        current_a_zero = a_value(b_zeros, x, y)
     a_values.append(a)
     b_values.append(b)
 
