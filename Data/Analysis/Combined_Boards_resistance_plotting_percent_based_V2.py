@@ -7,6 +7,7 @@ Created on Wed Aug 20 11:33:41 2025
 
 import os
 import copy
+import math
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -98,33 +99,47 @@ b_values = []
 def y_value(a, b, x):
     return (a * (1 - 1*np.exp((-1*b*x))))
 
-def a_value(b, x, y):
-    return ((2*y)/(1-np.exp(-1*b*x)))
+def a_value(b, xn, yn):
+    sum_for_numerator = 0
+    sum_for_denominator = 0
+    for i in range(len(yn)):
+        sum_for_numerator += (yn[i]*(1-np.exp(-1*b*xn[i])))
+        sum_for_denominator += math.pow((1-np.exp(-1*b*xn[i])), 2)
+    return ((2*sum_for_numerator)/(sum_for_denominator))  
     
-def partial_b_solved_for_a(b, x, y):
-    return ((4*y*x*np.exp(-1*b*x))/(1-np.exp(-1*b*x)))
+def partial_b_expression(a, b, x, y):
+    return (2*(y-1*a*(1-1*np.exp(-1*b*x))))*(-1*a*x*np.exp(-1*b*x))
 
-def solve_for_sum_of_partial_b(impact_percents, resistance_percents, b):
+def solve_for_sum_of_partial_b(impact_percents, resistance_percents, a, b):
     sum_of_partial = 0
     for i in range(len(impact_percents)):
-        sum_of_partial += partial_b_solved_for_a(b, impact_percents[i], resistance_percents[i])
+        sum_of_partial += partial_b_expression(a, b, impact_percents[i], resistance_percents[i])
     return sum_of_partial
 
-def sum_of_square_residuals()
+def sum_of_square_residuals(a, b, xn, yn):
+    sum_of_residuals = 0
+    for i in range(len(xn)):
+        sum_of_residuals += math.pow((yn[i]-a(1-np.exp(-1*b*xn[i]))), 2)
+    return sum_of_residuals
 
 for i in range(len(impact_numbers_percents)):
-    a = -1
-    b = -1
     possible_b_values = np.linspace(0,1,10000)
+    current_min_index = -1
     b_zeros = []
     a_zeros = []
     for j in range(len(possible_b_values)):
-        if(solve_for_sum_of_partial_b(impact_numbers_percents[i], resistance_numbers_percents[i], possible_b_values[j]) == 0):
+        if(solve_for_sum_of_partial_b(impact_numbers_percents[i], resistance_numbers_percents[i], a_value(possible_b_values[j], impact_numbers_percents[i], resistance_numbers_percents[i]), possible_b_values[j]) == 0):
             b_zeros.append[j]
     for j in range(len(b_zeros)):
-        current_a_zero = a_value(b_zeros, x, y)
-    a_values.append(a)
-    b_values.append(b)
+        a_zeros.append(a_value(b_zeros[j], impact_numbers_percents[i], resistance_numbers_percents[i]))
+    for j in range(len(a_zeros)):
+        if(j == 0):
+            current_min_index = j
+        elif(sum_of_square_residuals(a_zeros[current_min_index], b_zeros[current_min_index], impact_numbers_percents[i], resistance_numbers_percents[i]) < sum_of_square_residuals(a_zeros[j], b_zeros[j], impact_numbers_percents[i], resistance_numbers_percents[i])):
+            current_min_index = j
+    if (current_min_index != 0):
+        a_values.append(a_zeros[current_min_index])
+        b_values.append(b_zeros[current_min_index])
 
 fit_line_x_values = []
 fit_line_y_values = []
@@ -160,7 +175,7 @@ plt.ylabel('Resistance Percent')
 plt.title('Resistance Percent vs. Impact Percent')
 plt.grid(True)
 plt.tight_layout()
-plt.savefig(f"{save_path}\\all_boards_trendline_plot.png", dpi=300)
+plt.savefig(f"{save_path}\\all_boards_trendline_plot_V2.png", dpi=300)
 plt.show()
 
 for i in range(len(board_names)):
