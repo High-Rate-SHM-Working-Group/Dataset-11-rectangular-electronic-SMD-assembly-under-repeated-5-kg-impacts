@@ -147,7 +147,7 @@ for k in range(len(impact_numbers_percents)):
 fit_line_x_values = []
 fit_line_y_values = []
 for i in range(len(impact_numbers_percents)):
-    fit_line_x_values.append(np.linspace(0, 100))
+    fit_line_x_values.append(np.linspace(0, 100, 1000))
     fit_line_y_values.append(y_value(a_values[i], b_values[i], fit_line_x_values[i]))
     
 plt.figure(figsize=(12,8))
