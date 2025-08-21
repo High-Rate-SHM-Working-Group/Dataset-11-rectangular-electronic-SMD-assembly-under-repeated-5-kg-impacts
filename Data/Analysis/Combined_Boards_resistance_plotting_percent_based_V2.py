@@ -105,10 +105,10 @@ def a_value(b, xn, yn):
     for i in range(len(yn)):
         sum_for_numerator += (yn[i]*(1-np.exp(-1*b*xn[i])))
         sum_for_denominator += math.pow((1-np.exp(-1*b*xn[i])), 2)
-    return ((2*sum_for_numerator)/(sum_for_denominator))  
+    return (sum_for_numerator/sum_for_denominator)
     
 def partial_b_expression(a, b, x, y):
-    return (2*(y-1*a*(1-1*np.exp(-1*b*x))))*(-1*a*x*np.exp(-1*b*x))
+    return (2*(y-a*(1-np.exp(-1*b*x))))*(-1*a*x*np.exp(-1*b*x))
 
 def solve_for_sum_of_partial_b(impact_percents, resistance_percents, a, b):
     sum_of_partial = 0
@@ -119,27 +119,30 @@ def solve_for_sum_of_partial_b(impact_percents, resistance_percents, a, b):
 def sum_of_square_residuals(a, b, xn, yn):
     sum_of_residuals = 0
     for i in range(len(xn)):
-        sum_of_residuals += math.pow((yn[i]-a(1-np.exp(-1*b*xn[i]))), 2)
+        sum_of_residuals += math.pow((yn[i]-a*(1-np.exp(-1*b*xn[i]))), 2)
     return sum_of_residuals
 
-for i in range(len(impact_numbers_percents)):
-    possible_b_values = np.linspace(-1,2,30000)
+for k in range(len(impact_numbers_percents)):
+    possible_b_values = np.linspace(0,1,10000)
     current_min_index = -100
     b_zeros = []
     a_zeros = []
     for j in range(len(possible_b_values)):
-        if(solve_for_sum_of_partial_b(impact_numbers_percents[i], resistance_numbers_percents[i], a_value(possible_b_values[j], impact_numbers_percents[i], resistance_numbers_percents[i]), possible_b_values[j]) < 0.01):
-            b_zeros.append[j]
+        if(solve_for_sum_of_partial_b(impact_numbers_percents[k], resistance_numbers_percents[k], a_value(possible_b_values[j], impact_numbers_percents[k], resistance_numbers_percents[k]), possible_b_values[j]) < 0.00001):
+            b_zeros.append(possible_b_values[j])
     for j in range(len(b_zeros)):
-        a_zeros.append(a_value(b_zeros[j], impact_numbers_percents[i], resistance_numbers_percents[i]))
+        a_zeros.append(a_value(b_zeros[j], impact_numbers_percents[k], resistance_numbers_percents[k]))
     for j in range(len(a_zeros)):
         if(j == 0):
             current_min_index = j
-        elif(sum_of_square_residuals(a_zeros[current_min_index], b_zeros[current_min_index], impact_numbers_percents[i], resistance_numbers_percents[i]) < sum_of_square_residuals(a_zeros[j], b_zeros[j], impact_numbers_percents[i], resistance_numbers_percents[i])):
+        elif(sum_of_square_residuals(a_zeros[current_min_index], b_zeros[current_min_index], impact_numbers_percents[k], resistance_numbers_percents[k]) > sum_of_square_residuals(a_zeros[j], b_zeros[j], impact_numbers_percents[k], resistance_numbers_percents[k])):
             current_min_index = j
     if (current_min_index != -100):
         a_values.append(a_zeros[current_min_index])
         b_values.append(b_zeros[current_min_index])
+    else:
+        a_values.append(100)
+        b_values.append(0.08)
 
 fit_line_x_values = []
 fit_line_y_values = []
