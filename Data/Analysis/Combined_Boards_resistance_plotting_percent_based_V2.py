@@ -123,12 +123,12 @@ def sum_of_square_residuals(a, b, xn, yn):
     return sum_of_residuals
 
 for i in range(len(impact_numbers_percents)):
-    possible_b_values = np.linspace(0,1,10000)
-    current_min_index = -1
+    possible_b_values = np.linspace(-1,2,30000)
+    current_min_index = -100
     b_zeros = []
     a_zeros = []
     for j in range(len(possible_b_values)):
-        if(solve_for_sum_of_partial_b(impact_numbers_percents[i], resistance_numbers_percents[i], a_value(possible_b_values[j], impact_numbers_percents[i], resistance_numbers_percents[i]), possible_b_values[j]) == 0):
+        if(solve_for_sum_of_partial_b(impact_numbers_percents[i], resistance_numbers_percents[i], a_value(possible_b_values[j], impact_numbers_percents[i], resistance_numbers_percents[i]), possible_b_values[j]) < 0.01):
             b_zeros.append[j]
     for j in range(len(b_zeros)):
         a_zeros.append(a_value(b_zeros[j], impact_numbers_percents[i], resistance_numbers_percents[i]))
@@ -137,7 +137,7 @@ for i in range(len(impact_numbers_percents)):
             current_min_index = j
         elif(sum_of_square_residuals(a_zeros[current_min_index], b_zeros[current_min_index], impact_numbers_percents[i], resistance_numbers_percents[i]) < sum_of_square_residuals(a_zeros[j], b_zeros[j], impact_numbers_percents[i], resistance_numbers_percents[i])):
             current_min_index = j
-    if (current_min_index != 0):
+    if (current_min_index != -100):
         a_values.append(a_zeros[current_min_index])
         b_values.append(b_zeros[current_min_index])
 
