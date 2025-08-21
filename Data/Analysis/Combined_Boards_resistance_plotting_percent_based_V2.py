@@ -123,7 +123,7 @@ def sum_of_square_residuals(a, b, xn, yn):
     return sum_of_residuals
 
 for k in range(len(impact_numbers_percents)):
-    possible_b_values = np.linspace(0,1,10000)
+    possible_b_values = np.linspace(-1,2,30000)
     current_min_index = -100
     b_zeros = []
     a_zeros = []
