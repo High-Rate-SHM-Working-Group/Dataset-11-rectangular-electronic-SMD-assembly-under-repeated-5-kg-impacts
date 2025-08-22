@@ -80,18 +80,18 @@ for i in range(len(resistance_numbers_list)):
     for j in range(len(resistance_numbers_list[i])):
         resistance_numbers_percents[i][j] = ((resistance_numbers_list[i][j] - current_min) / (current_max-current_min)) * 100
 
-plt.figure(figsize=(10, 6))
-for i in range(len(board_names)):
-    plt.plot(impact_numbers_percents[i], resistance_numbers_percents[i],  marker='o', linestyle='-', label=board_names[i])
+#plt.figure(figsize=(10, 6))
+#for i in range(len(board_names)):
+    #plt.plot(impact_numbers_percents[i], resistance_numbers_percents[i],  marker='o', linestyle='-', label=board_names[i])
 #plt.ylim([-0.0005,0.002])
-plt.legend()
-plt.xlabel('Impact Percent')
-plt.ylabel('Resistance Percent')
-plt.title('Resistance Percent vs. Impact Percent')
-plt.grid(True)
-plt.tight_layout()
-plt.savefig(f"{save_path}\\all_boards_metric_plot_percent_based_V2.png", dpi=300)
-plt.show()
+#plt.legend()
+#plt.xlabel('Impact Percent')
+#plt.ylabel('Resistance Percent')
+#plt.title('Resistance Percent vs. Impact Percent')
+#plt.grid(True)
+#plt.tight_layout()
+#plt.savefig(f"{save_path}\\all_boards_metric_plot_percent_based_V2.png", dpi=300)
+#plt.show()
 
 a_values = []
 b_values = []
