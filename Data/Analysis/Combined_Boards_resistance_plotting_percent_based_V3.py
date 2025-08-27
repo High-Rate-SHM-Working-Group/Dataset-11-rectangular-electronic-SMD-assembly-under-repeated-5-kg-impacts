@@ -7,9 +7,10 @@ Created on Wed Aug 20 11:33:41 2025
 
 import os
 import copy
-import math
+#import math
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.svm import SVR
 
 #plt.figure().close('all')
 
@@ -96,60 +97,26 @@ for i in range(len(resistance_numbers_list)):
 a_values = []
 b_values = []
 
-def y_value(a, b, x):
-    return (a * (1 - 1*np.exp((-1*b*x))))
+impact_numbers_percents_array = copy.deepcopy(impact_numbers_percents)
+#resistance_numbers_percents_array = copy.deepcopy(resistance_numbers_percents)
 
-def a_value(b, xn, yn):
-    sum_for_numerator = 0
-    sum_for_denominator = 0
-    for i in range(len(yn)):
-        sum_for_numerator += (yn[i]*(1-np.exp(-1*b*xn[i])))
-        sum_for_denominator += math.pow((1-np.exp(-1*b*xn[i])), 2)
-    return (sum_for_numerator/sum_for_denominator)
-    
-def partial_b_expression(a, b, x, y):
-    return (2*(y-a*(1-np.exp(-1*b*x))))*(-1*a*x*np.exp(-1*b*x))
+for i in range(len(impact_numbers_percents_array)):
+    for j in range(len(impact_numbers_percents_array[i])):
+        impact_numbers_percents_array[i][j] = [impact_numbers_percents[i][j]]
+        #resistance_numbers_percents_array[i][j] = np.array(resistance_numbers_percents[i][j])
 
-def solve_for_sum_of_partial_b(impact_percents, resistance_percents, a, b):
-    sum_of_partial = 0
-    for i in range(len(impact_percents)):
-        sum_of_partial += partial_b_expression(a, b, impact_percents[i], resistance_percents[i])
-    return sum_of_partial
+#print(impact_numbers_percents_array)
+svr_rbf = []
+for i in range(len(impact_numbers_percents)):
+    svr_rbf.append(SVR(kernel="rbf"))
+    svr_rbf[i].fit(impact_numbers_percents_array[i], resistance_numbers_percents[i])
 
-def sum_of_square_residuals(a, b, xn, yn):
-    sum_of_residuals = 0
-    for i in range(len(xn)):
-        sum_of_residuals += math.pow((yn[i]-a*(1-np.exp(-1*b*xn[i]))), 2)
-    return sum_of_residuals
-
-for k in range(len(impact_numbers_percents)):
-    possible_b_values = np.linspace(-1,2,30000)
-    current_min_index = -100
-    b_zeros = []
-    a_zeros = []
-    for j in range(len(possible_b_values)):
-        if(solve_for_sum_of_partial_b(impact_numbers_percents[k], resistance_numbers_percents[k], a_value(possible_b_values[j], impact_numbers_percents[k], resistance_numbers_percents[k]), possible_b_values[j]) < 0.00001):
-            b_zeros.append(possible_b_values[j])
-    for j in range(len(b_zeros)):
-        a_zeros.append(a_value(b_zeros[j], impact_numbers_percents[k], resistance_numbers_percents[k]))
-    for j in range(len(a_zeros)):
-        if(j == 0):
-            current_min_index = j
-        elif(sum_of_square_residuals(a_zeros[current_min_index], b_zeros[current_min_index], impact_numbers_percents[k], resistance_numbers_percents[k]) > sum_of_square_residuals(a_zeros[j], b_zeros[j], impact_numbers_percents[k], resistance_numbers_percents[k])):
-            if(y_value(a_zeros[j], b_zeros[j], 100) > 99.9 and y_value(a_zeros[j], b_zeros[j], 100) < 100.1):
-                current_min_index = j
-    if (current_min_index != -100):
-        a_values.append(a_zeros[current_min_index])
-        b_values.append(b_zeros[current_min_index])
-    else:
-        a_values.append(100)
-        b_values.append(0.08)
-
-fit_line_x_values = []
+fit_line_x_values = [[] for i in range(len(impact_numbers_percents))]
 fit_line_y_values = []
 for i in range(len(impact_numbers_percents)):
-    fit_line_x_values.append(np.linspace(0, 100, 1000))
-    fit_line_y_values.append(y_value(a_values[i], b_values[i], fit_line_x_values[i]))
+    for j in range(1001):
+        fit_line_x_values[i].append([(j*0.1)])
+    fit_line_y_values.append(svr_rbf[i].predict(fit_line_x_values[i]))
     
 plt.figure(figsize=(12,8))
 #plt.plot(fit_line_x_values[0], fit_line_y_values[0])
