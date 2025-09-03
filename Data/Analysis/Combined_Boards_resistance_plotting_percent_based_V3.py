@@ -10,7 +10,8 @@ import copy
 #import math
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.svm import SVR
+from sklearn.base import BaseEstimator, RegressorMixin
+from scipy.optimize import curve_fit
 
 #plt.figure().close('all')
 
@@ -106,17 +107,49 @@ for i in range(len(impact_numbers_percents_array)):
         #resistance_numbers_percents_array[i][j] = np.array(resistance_numbers_percents[i][j])
 
 #print(impact_numbers_percents_array)
-svr_rbf = []
-for i in range(len(impact_numbers_percents)):
-    svr_rbf.append(SVR(kernel="rbf"))
-    svr_rbf[i].fit(impact_numbers_percents_array[i], resistance_numbers_percents[i])
+#svr_rbf = []
+#for i in range(len(impact_numbers_percents)):
+    #svr_rbf.append(SVR(kernel="rbf"))
+    #svr_rbf[i].fit(impact_numbers_percents_array[i], resistance_numbers_percents[i])
+def custom_eq(x, a, b):
+    return a * (1 - np.exp(-b * x))
 
-fit_line_x_values = [[] for i in range(len(impact_numbers_percents))]
+class CustomExpRegressor(BaseEstimator, RegressorMixin):
+    def __init__(self, a_init=100, b_init=0.08):
+        self.a_init = a_init
+        self.b_init = b_init
+        self.a_ = None
+        self.b_ = None
+
+    def fit(self, X, y):
+        # Make sure X is 1D
+        X = np.asarray(X).ravel()
+        y = np.asarray(y)
+
+        # Use curve_fit to estimate parameters
+        params, _ = curve_fit(custom_eq, X, y, p0=[self.a_init, self.b_init], maxfev=30000)
+        self.a_, self.b_ = params
+        return self
+
+    def predict(self, X):
+        X = np.asarray(X).ravel()
+        return custom_eq(X, self.a_, self.b_)
+
+models = []
+for i in range(len(impact_numbers_percents)):
+    models.append(CustomExpRegressor(a_init = 100, b_init = 0.08))
+    models[i].fit(impact_numbers_percents[i], resistance_numbers_percents[i])
+
+fit_line_x_values = []
 fit_line_y_values = []
 for i in range(len(impact_numbers_percents)):
-    for j in range(1001):
-        fit_line_x_values[i].append([(j*0.1)])
-    fit_line_y_values.append(svr_rbf[i].predict(fit_line_x_values[i]))
+    fit_line_x_values.append(np.linspace(0, 100, 1000))
+    fit_line_y_values.append(models[i].predict(fit_line_x_values[i]))
+    
+#for i in range(len(impact_numbers_percents)):
+    #for j in range(1001):
+        #fit_line_x_values[i].append([(j*0.1)])
+    #fit_line_y_values.append(svr_rbf[i].predict(fit_line_x_values[i]))
     
 plt.figure(figsize=(12,8))
 #plt.plot(fit_line_x_values[0], fit_line_y_values[0])
