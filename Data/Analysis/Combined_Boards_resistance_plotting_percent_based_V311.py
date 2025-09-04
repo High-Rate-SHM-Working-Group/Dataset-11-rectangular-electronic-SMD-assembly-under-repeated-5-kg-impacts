@@ -62,37 +62,41 @@ for i in data_list:
             impact_numbers_list.append(impacts)
             resistance_numbers_list.append(resistances)
 
-impact_numbers_percents = copy.deepcopy(impact_numbers_list)
-resistance_numbers_percents = copy.deepcopy(resistance_numbers_list)
-
-for i in range(len(impact_numbers_list)):
-    for j in range(len(impact_numbers_list[i])):
-        impact_numbers_percents[i][j] = (impact_numbers_list[i][j] / impact_numbers_list[i][-1]) * 100
-
-for i in range(len(resistance_numbers_list)):
-    current_max = 0
-    current_min = 0
-    for j in range(len(resistance_numbers_list[i])):
-        if j == 0:
-            current_max = resistance_numbers_list[i][j]
-            current_min = resistance_numbers_list[i][j]
-        else:
-            if current_max < resistance_numbers_list[i][j]:
-                current_max = resistance_numbers_list[i][j]
-            if current_min > resistance_numbers_list[i][j]:
-                current_min = resistance_numbers_list[i][j]
-    for j in range(len(resistance_numbers_list[i])):
-        resistance_numbers_percents[i][j] = ((resistance_numbers_list[i][j] - current_min) / (current_max-current_min)) * 100
+impact_numbers_removed = copy.deepcopy(impact_numbers_list)
+resistance_numbers_removed = copy.deepcopy(resistance_numbers_list)
 
 for i in range(len(impact_numbers_list)):
     pop_total = 0
     for j in range(len(impact_numbers_list[i])):
         for k in range(len(impacts_to_remove[i])):
             if impact_numbers_list[i][j] == impacts_to_remove[i][k] or impact_numbers_list[i][j] == 0 or impact_numbers_list[i][j] == 1 or impact_numbers_list[i][j] == len(impact_numbers_list[i])-1:
-                impact_numbers_percents[i].pop(j-pop_total)
-                resistance_numbers_percents[i].pop(j-pop_total)
+                impact_numbers_removed[i].pop(j-pop_total)
+                resistance_numbers_removed[i].pop(j-pop_total)
                 pop_total= pop_total+1
                 break
+
+impact_numbers_percents = copy.deepcopy(impact_numbers_removed)
+resistance_numbers_percents = copy.deepcopy(resistance_numbers_removed)
+
+for i in range(len(impact_numbers_removed)):
+    for j in range(len(impact_numbers_removed[i])):
+        impact_numbers_percents[i][j] = (impact_numbers_removed[i][j] / impact_numbers_removed[i][-1]) * 100
+
+for i in range(len(resistance_numbers_removed)):
+    current_max = 0
+    current_min = 0
+    for j in range(len(resistance_numbers_removed[i])):
+        if j == 0:
+            current_max = resistance_numbers_removed[i][j]
+            current_min = resistance_numbers_removed[i][j]
+        else:
+            if current_max < resistance_numbers_removed[i][j]:
+                current_max = resistance_numbers_removed[i][j]
+            if current_min > resistance_numbers_removed[i][j]:
+                current_min = resistance_numbers_removed[i][j]
+    for j in range(len(resistance_numbers_removed[i])):
+        resistance_numbers_percents[i][j] = ((resistance_numbers_removed[i][j] - current_min) / (current_max-current_min)) * 100
+
 #plt.figure(figsize=(10, 6))
 #for i in range(len(board_names)):
     #plt.plot(impact_numbers_percents[i], resistance_numbers_percents[i],  marker='o', linestyle='-', label=board_names[i])
@@ -177,7 +181,7 @@ plt.ylabel('Resistance Percent')
 plt.title('Resistance Percent vs. Impact Percent')
 plt.grid(True)
 plt.tight_layout()
-plt.savefig(f"{save_path}\\all_boards_metric_plot_percent_based_with_trendlines_V31.png", dpi=300)
+plt.savefig(f"{save_path}\\all_boards_metric_plot_percent_based_with_trendlines_V311.png", dpi=300)
 plt.show()
 
 plt.figure(figsize=(10, 6))
@@ -190,7 +194,7 @@ plt.ylabel('Resistance Percent')
 plt.title('Resistance Percent vs. Impact Percent')
 plt.grid(True)
 plt.tight_layout()
-plt.savefig(f"{save_path}\\all_boards_trendline_plot_V31.png", dpi=300)
+plt.savefig(f"{save_path}\\all_boards_trendline_plot_V311.png", dpi=300)
 plt.show()
 
 for i in range(len(board_names)):
@@ -204,7 +208,7 @@ for i in range(len(board_names)):
     plt.title('Resistance Percent vs. Impact Percent')
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(f"{board_save_paths[i]}\\{board_names[i]}_metric_plot_percent_based_V31.png", dpi=300)
+    plt.savefig(f"{board_save_paths[i]}\\{board_names[i]}_metric_plot_percent_based_V311.png", dpi=300)
     plt.show()
 
 
