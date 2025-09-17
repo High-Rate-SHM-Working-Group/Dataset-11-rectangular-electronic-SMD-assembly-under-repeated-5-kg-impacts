@@ -213,14 +213,60 @@ for i in range(len(board_names)):
         plt.plot(impact_numbers_percents[i], resistance_numbers_percents[i], label=board_names[i], linewidth=1, linestyle='',  marker='.')
         plt.plot(fit_line_x_values[i], fit_line_y_values[i], label=board_names_trendline[i], linewidth=1)
         
-        plt.xlabel("time (ms)")
-        plt.ylabel("displacement (mm)")
+        plt.xlabel("impact percent")
+        plt.ylabel("resistance percent")
         # plt.title("Midpoint Displacement Comparison: MATLAB vs Abaqus")
-        plt.legend(facecolor="white", edgecolor="lightgray", framealpha=1, frameon=True)
+        plt.legend(loc="lower right", facecolor="white", edgecolor="lightgray", framealpha=1, frameon=True)
         plt.grid(True)
         plt.tight_layout()
         
         #plt.savefig(save_path, dpi=300, bbox_inches='tight')
         plt.show()
+        
 
 
+plt.figure(figsize=(6, 3))
+plt.rcParams['font.family'] = 'Times New Roman'
+plt.rcParams['font.size'] = 10
+
+for i in range(len(board_names)):
+    if i == only_boards[i]:  # Only selected boards
+        plt.plot(
+            impact_numbers_percents[i],
+            resistance_numbers_percents[i],
+            marker='.',
+            linestyle='',
+            linewidth=1,
+            label=board_names[i]
+        )
+
+# plt.ylim([-5, 120])
+plt.legend(loc="lower right", facecolor="white", edgecolor="lightgray", framealpha=1, frameon=True)
+plt.xlabel("impact percent")
+plt.ylabel("resistance percent")
+# plt.title("Resistance Percent vs. Impact Percent (Data Only)")
+plt.grid(True)
+plt.tight_layout()
+plt.savefig(f"{save_path}\\selected_boards_data_only.png", dpi=300, bbox_inches='tight')
+plt.show()
+
+
+plt.figure(figsize=(6, 3))
+for i in range(len(board_names)):
+    if i == only_boards[i]:  # Only selected boards
+        plt.plot(
+            fit_line_x_values[i],
+            fit_line_y_values[i],
+            linewidth=1,
+            label=board_names_trendline[i]
+        )
+
+# plt.ylim([-5, 120])
+plt.legend(loc="lower right", facecolor="white", edgecolor="lightgray", framealpha=1, frameon=True)
+plt.xlabel("impact percent")
+plt.ylabel("resistance percent")
+# plt.title("Resistance Percent vs. Impact Percent (Trendlines Only)")
+plt.grid(True)
+plt.tight_layout()
+plt.savefig(f"{save_path}\\selected_boards_trendlines_only.png", dpi=300, bbox_inches='tight')
+plt.show()
