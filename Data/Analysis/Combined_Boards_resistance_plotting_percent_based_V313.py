@@ -192,7 +192,7 @@ plt.legend(facecolor="white", edgecolor="lightgray", framealpha=1, frameon=True)
 plt.grid(True)
 plt.tight_layout()
 
-#plt.savefig(save_path, dpi=300, bbox_inches='tight')
+plt.savefig(f"{save_path}\\all_boards_metric_plot_percent_based_with_trendlines_V313.png", dpi=300, bbox_inches='tight')
 plt.show()
 
 
