@@ -213,7 +213,7 @@ plt.legend(facecolor="white", edgecolor="lightgray", framealpha=1, frameon=True)
 plt.grid(True)
 plt.tight_layout()
 
-plt.savefig(f"{save_path}\\all_boards_trendline_plot_V212.png", dpi=300, bbox_inches='tight')
+plt.savefig(f"{save_path}\\all_boards_trendline_plot_V313png", dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -233,7 +233,7 @@ for i in range(len(board_names)):
         plt.grid(True)
         plt.tight_layout()
         
-        plt.savefig(f"{board_save_paths[i]}\\{board_names[i]}_metric_plot_percent_based_V212.png", dpi=300, bbox_inches='tight')
+        plt.savefig(f"{board_save_paths[i]}\\{board_names[i]}_metric_plot_percent_based_V313.png", dpi=300, bbox_inches='tight')
         plt.show()
         
 
