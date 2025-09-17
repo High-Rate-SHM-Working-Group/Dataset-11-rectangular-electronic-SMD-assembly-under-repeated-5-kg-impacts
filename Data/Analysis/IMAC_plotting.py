@@ -238,7 +238,7 @@ for i, board in enumerate(board_names):
         )
         
         plt.tight_layout(rect=[0, 0.05, 1, 1])  # leave room for legend
-        plt.savefig(f"{save_board_path}\\{board}_feature_subplots.png", dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(save_path, f"{board}_feature_subplots.png"), dpi=300, bbox_inches="tight")
         plt.show()
 
 # %% Test Profile
