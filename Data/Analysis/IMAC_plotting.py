@@ -13,7 +13,6 @@ Created on Wed Aug 20 11:33:41 2025
 """
 
 import os
-import math
 import copy
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,6 +23,7 @@ from scipy.stats import skew, kurtosis
 import itertools
 import matplotlib.cm as cm
 import matplotlib.ticker as mticker
+from matplotlib.lines import Line2D
 
 # %% PATHS
 current_directory = os.getcwd()
@@ -131,7 +131,7 @@ plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams['font.size'] = 10
 
 # Data only
-plt.figure(figsize=(6, 3))
+plt.figure(figsize=(6, 2.5))
 for i in range(len(board_names)):
     if i in only_boards and i != -1:   # <- filter correctly
         plt.plot(impact_numbers_percents[i], resistance_numbers_percents[i],
@@ -143,7 +143,7 @@ plt.savefig(f"{save_path}\\selected_boards_data_only.png", dpi=300, bbox_inches=
 plt.show()
 
 # Trendlines only
-plt.figure(figsize=(6, 3))
+plt.figure(figsize=(6, 2.5))
 for i in range(len(board_names)):
     if i in only_boards and i != -1:
         plt.plot(fit_line_x_values[i], fit_line_y_values[i],
@@ -152,6 +152,57 @@ plt.legend(loc="lower right", facecolor="white", edgecolor="lightgray", framealp
 plt.xlabel("impact percent"); plt.ylabel("resistance percent")
 plt.grid(True); plt.tight_layout()
 plt.savefig(f"{save_path}\\selected_boards_trendlines_only.png", dpi=300, bbox_inches='tight')
+plt.show()
+
+# %% RESISTANCE PLOT (data + trendlines superimposed, matching colors)
+plt.rcParams['font.family'] = 'Times New Roman'
+plt.rcParams['font.size'] = 10
+
+colors = itertools.cycle(plt.cm.tab10.colors)
+plt.figure(figsize=(6, 2.5))
+
+legend_handles = []
+legend_labels = []
+
+for i in range(len(board_names)):
+    if i in only_boards and i != -1:
+        color = next(colors)
+
+        # scatter = resistance data
+        plt.plot(
+            impact_numbers_percents[i], resistance_numbers_percents[i],
+            marker='.', linestyle='', linewidth=1, color=color
+        )
+
+        # line = exponential fit
+        plt.plot(
+            fit_line_x_values[i], fit_line_y_values[i],
+            linewidth=1.2, color=color
+        )
+
+        # one combined legend entry per board
+        combined_handle = Line2D(
+            [0], [0],
+            marker='.', color=color, linestyle='-',
+            markersize=6, linewidth=1.2
+        )
+        legend_handles.append(combined_handle)
+        legend_labels.append(board_names[i].lower())
+
+plt.xlabel("impact percent")
+plt.ylabel("resistance percent")
+plt.grid(True)
+
+# final legend: one row per board
+plt.legend(
+    legend_handles, legend_labels,
+    loc="lower right",
+    facecolor="white", edgecolor="lightgray",
+    framealpha=1, frameon=True
+)
+
+plt.tight_layout()
+plt.savefig(f"{save_path}\\selected_boards_resist.png", dpi=300, bbox_inches='tight')
 plt.show()
 
 # %% FEATURE EXTRACTION
@@ -186,7 +237,7 @@ for i, board in enumerate(board_names):
         features_normalized = [preprocessing.normalize([f])[0] for f in features]
 
         # ============ CREATE SUBPLOTS ============
-        fig, axs = plt.subplots(2, 1, figsize=(6, 4), sharex=True)
+        fig, axs = plt.subplots(2, 1, figsize=(6, 3), sharex=True)
 
         # unique colors for all 8 features
         colors = itertools.cycle(cm.tab10.colors)
@@ -216,7 +267,7 @@ for i, board in enumerate(board_names):
         axs[1].grid(True)
 
         # Shared y-axis label (centered across both subplots)
-        fig.text(-0.03, 0.5, "normalized feature value", va="center", rotation="vertical")
+        fig.text(-0.03, 0.6, "normalized feature value", va="center", rotation="vertical")
         
         for ax in axs:
             ax.yaxis.set_major_formatter(mticker.FormatStrFormatter("%.2f"))
@@ -257,7 +308,7 @@ excitation = excitation - excitation[0]   # or excitation.mean()
 response   = response - response[0]       # or response.mean()
 
 # plot
-plt.figure(figsize=(6, 3))
+plt.figure(figsize=(6, 2.5))
 plt.plot(time, response, label="response", linewidth=1)
 plt.plot(time, excitation, label="excitation", linewidth=1)
 plt.xlim(0,0.06)
@@ -270,7 +321,7 @@ plt.savefig(os.path.join(save_path, "excitation_response.png"), dpi=300, bbox_in
 plt.show()
 
 # create subplots
-fig, axs = plt.subplots(2, 1, figsize=(6, 4), sharex=True)
+fig, axs = plt.subplots(2, 1, figsize=(6, 2.5), sharex=True)
 
 # --- Excitation subplot
 axs[0].plot(time, excitation, linewidth=1, color="tab:blue")
