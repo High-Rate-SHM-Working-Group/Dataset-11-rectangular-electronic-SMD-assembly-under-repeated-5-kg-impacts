@@ -9,8 +9,8 @@ import os
 import matplotlib.pyplot as plt
 
 # Folder containing your .lvm files
-folder_path = r"C:\Users\trott\Documents\Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts\Data\Board 0.0"
-save_path = r"C:\Users\trott\Documents\Dataset-11-rectangular-electronic-assembly-under-repeated-5-kg-impacts\Data\Board 0.0\Figures"
+folder_path = r"C:\Users\trott\Documents\Dataset-11-rectangular-electronic-SMD-assembly-under-repeated-5-kg-impacts\Data\Board 5.1"
+save_path = r"C:\Users\trott\Documents\Dataset-11-rectangular-electronic-SMD-assembly-under-repeated-5-kg-impacts\Data\Board 5.1\Figures"
 MAX_VALID_RESISTANCE = 100000  # Define your threshold here
 MIN_VALID_RESISTANCE = 0     # Avoid log(0) or negative
 
@@ -44,5 +44,5 @@ plt.ylabel('resistance (Ohms)')
 plt.title('Filtered Resistance vs. Impact Number')
 plt.grid(True)
 plt.tight_layout()
-plt.savefig(f"{save_path}\\0_0_metric_plot.png", dpi=300)
+plt.savefig(f"{save_path}\\5_1_metric_plot.png", dpi=300)
 plt.show()
