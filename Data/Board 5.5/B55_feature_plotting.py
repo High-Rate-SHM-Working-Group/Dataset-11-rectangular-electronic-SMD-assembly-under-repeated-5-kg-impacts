@@ -16,7 +16,7 @@ from sklearn import preprocessing
 
 current_directory = os.getcwd()
 file_path = current_directory
-save_path = current_directory.replace("\Board 5.3", "\Board 5.3\\figures")
+save_path = current_directory.replace("\Board 5.5", "\Board 5.5\\figures")
 
 impacts = []
 feature_names = ["Maximum", "Absolute Mean", "RMS", "Skewness", "Kurtosis", "Crest Factor", "Shape Factor", "Impulse Factor"]
@@ -137,5 +137,5 @@ plt.ylabel('Feature Values')
 plt.title('Feature Plot of Board Acceleration')
 plt.grid(True)
 plt.tight_layout()
-plt.savefig(f"{save_path}\\5_3_feature_plot", dpi=300)
+plt.savefig(f"{save_path}\\5_5_feature_plot", dpi=300)
 plt.show()
