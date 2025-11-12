@@ -20,9 +20,9 @@ exclude_boards = []
 
 # per-board exclusions
 impacts_to_exclude = {
-    "Board 4.4": [27, 33, 34, 53, 54],
-    "Board 4.5": [6, 9, 46, 79],
-    "Board 4.6": [21],
+    "Board 4.04": [27, 33, 34, 53, 54],
+    "Board 4.05": [6, 9, 46, 79],
+    "Board 4.06": [21],
 }
 
 data_list = sorted([d for d in os.listdir(file_path) if d.startswith("Board")])
