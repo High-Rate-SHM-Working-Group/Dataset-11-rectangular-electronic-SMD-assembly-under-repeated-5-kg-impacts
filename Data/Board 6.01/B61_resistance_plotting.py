@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 # Folder containing your .lvm files
 current_directory = os.getcwd()
 folder_path = current_directory
-save_path = current_directory.replace("\Board 5.06", "\Board 5.06\\figures")
+save_path = current_directory.replace("\Board 6.01", "\Board 6.01\\figures")
 MAX_VALID_RESISTANCE = 100000  # Define your threshold here
 MIN_VALID_RESISTANCE = 0     # Avoid log(0) or negative
 
@@ -45,5 +45,5 @@ plt.ylabel('resistance (Ohms)')
 plt.title('Filtered Resistance vs. Impact Number')
 plt.grid(True)
 plt.tight_layout()
-plt.savefig(f"{save_path}\\5_6_metric_plot.png", dpi=300)
+plt.savefig(f"{save_path}\\6_1_metric_plot.png", dpi=300)
 plt.show()
