@@ -13,7 +13,7 @@ current_directory = os.getcwd()
 folder_path = current_directory
 save_path = current_directory.replace("\Board 6.04", "\Board 6.04\\figures")
 MAX_VALID_RESISTANCE = 100000  # Define your threshold here
-MIN_VALID_RESISTANCE = 0     # Avoid log(0) or negative
+MIN_VALID_RESISTANCE = 0.2745     # Avoid log(0) or negative
 
 lvm_files = sorted([f for f in os.listdir(folder_path) if f.endswith(".lvm")])
 
